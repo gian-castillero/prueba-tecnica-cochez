@@ -51,10 +51,47 @@ Nota: en este prototipo, la respuesta es simulada con un "mock" para evitar gast
 - **Cuerpo del mensaje** 
 - **Cupón de descuento sugerido**
 
-[!NOTE]
 Nota: En la práctica, esta respuesta se utiliza para enviar una notificación push personalizada al cliente.
 
+## Estructura del repositorio
 
+prueba-tecnica-cochez/
+│
+├── README.md
+├── .gitignore
+├── Instrucciones - Prueba Técnica.pdf   # contexto, requerimientos e indicaciones
+│
+└── sistema-recomendacion.ipynb          # Prototipo del sistema
 
+## Como correr el código
 
+1. Clonar el repositorio
+
+```bash
+git clone https://github.com/gian-castillero/prueba-tecnica-cochez.git
+cd prueba-tecnica-cochez
+```
+
+2. Instalar las librerias necesarias (en caso de no tenerlas)
+
+```bash
+pip install numpy pandas scikit-learn matplotlib openai python-dotenv notebook
+```
+
+3. Agregar API key de OpenAI
+
+Crea un archivo llamado `.env` en la misma carpeta del notebook con esta única línea:
+ 
+```
+OPENAI_API_KEY=tu-api-key-aqui
+```
+Nota: Este paso solo es necesario en caso de querer una respuesta real del LLM (`MOCK = False` dentro del notebook) y no utilizar el mock que simula la respuesta.
+
+## Decisiones técnincas 
+
+## Como escalaría este sistema en producción
+
+## Resultados
+
+## Limitaciones 
 

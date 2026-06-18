@@ -1,6 +1,6 @@
 # Prueba Técnica: Sistema Híbrido de Recomendación y Personalización de Retail (GenAI + ML)
 
-Prototipo de un sistema que clasifica a los clientes según su riesgo de fuga y luego genera un mensaje de fidelización personalizado, adaptando el tono y la oferta según el segmento del cliente y su historial de compras. El sistema es diseñado con el objetivo de mejorar la retención de clientes mediante campañas de marketing ultra-personalizadas. 
+Prototipo de un sistema que clasifica a los clientes según su riesgo de fuga y luego genera un mensaje de fidelización personalizado, adaptando el tono y oferta de descuento según el segmento del cliente y su historial de compras. El sistema fue diseñado con el objetivo de mejorar la retención de clientes mediante campañas de marketing ultra-personalizadas. 
 
 ## Contexto del negocio 
 
@@ -16,9 +16,9 @@ El sistema combina un modelo predictivo (Machine Learning tradicional) y un LLM 
 - **transacciones**: `id_transaccion`, `id_cliente`, `id_producto`, `fecha`
 - **productos**: `id_producto`, `precio`, `categoría`
 
-Nota: Para esta prueba tecnica sin embargo, se entiende que en la práctica esta base de datos tendría columnas adicionales como por ejemplo nombre del cliente, sucursal de transacción, etc.
+Nota: Para esta prueba técnica se utiliza una estructura simplificada. En un entorno real, estas tablas incluirían más atributos, como nombre del cliente, información de sucursales, etc.
 
-2. Mediante SQL se construye un dataset con la siguientes variables para cada cliente:
+2. Utilizando SQL se construye un dataset con la siguientes variables para cada cliente:
 
 - `ID del cliente`: identificador único del cliente
 - `Recencia`: días desde la última compra
@@ -28,7 +28,7 @@ Nota: Para esta prueba tecnica sin embargo, se entiende que en la práctica esta
 
 3. Para este prototipo, se genera un dataset sintético de 1000 clientes con estas variables. 
 
-4. Se realiza preprocesamiento de datos normalizando los datos númericos (Recencia, Frecuencia, y Monto total gastado) utilizando StandardScaler. 
+4. Se realiza preprocesamiento de datos, normalizando los datos númericos (Recencia, Frecuencia, y Monto total gastado) utilizando StandardScaler. 
 
 5. Se entrena un **Gaussian Mixture Model** (clasificador no supervisado), seleccionando el número óptimo de clusters mediante el **Bayesian Information Criterion** (BIC)
 

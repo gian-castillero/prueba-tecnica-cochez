@@ -55,6 +55,7 @@ Nota: En la práctica, esta respuesta se utiliza para enviar una notificación p
 
 ## Estructura del repositorio
 
+```bash
 prueba-tecnica-cochez/
 │
 ├── README.md
@@ -62,6 +63,7 @@ prueba-tecnica-cochez/
 ├── Instrucciones - Prueba Técnica.pdf   # contexto, requerimientos e indicaciones
 │
 └── sistema-recomendacion.ipynb          # Prototipo del sistema
+```
 
 ## Como correr el código
 

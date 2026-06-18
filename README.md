@@ -95,7 +95,7 @@ Nota: Este paso solo es necesario en caso de querer una respuesta real del LLM (
 
 En la base de datos relacional y, por ende en la consulta SQL, cada fila de **transacciones** representa un producto dentro de una transacción ya que en una transacción se pueden adquirir múltiples productos. Por ende, múltiples filas pueden tener el mismo `id_transaccion`.
 
-2. **Dataset sintético**
+2. **Dataset sintético**:
 
 Para este prototipo, el dataset se generó sintéticamente utilizando distribuciones independientes por cliente, con el objetivo de poder implementar el sistema de forma completa. Esto implica una menor segmentación natural en los datos. En un dataset de transacciones reales, los patrones de comportamiento serían más definidos y, por ende, se esperaría una segmentación más marcada. A pesar de esto, el análisis se realizó siguiendo el mismo enfoque que se utilizaría con datos reales.
 
@@ -113,10 +113,6 @@ Por último, el modelo permite su evaluación a través de BIC, lo cual permite 
 
 El prompt combina asignación de rol (experto en e-commerce/marketing de Cochez) con few-shot prompting (dos ejemplos completos de entrada y salida), e instrucciones por segmento y por monto total gastado.
 
-## Como escalaría este sistema en producción
-
-
-
 ## Resultados
 
 | Segmento | % clientes | Frecuencia promedio | Monto total gastado promedio | Recencia promedio (días) | Interpretación |
@@ -130,6 +126,13 @@ Silhouette Score del modelo final: **0.14**, lo cual indica overlap considerable
 
 Nota: Esto es esperable debido a que el dataset es sintético y no contiene patrones reales de comportamiento diferenciados entre clientes. 
 
+## Como escalaría este sistema en producción
 
+Escalaría este sistema en producción a través de un flujo automático que no dependa del notebook.
 
+Primero, los datos se guardarían y actualizarían en una base de datos real en un data lake o data warehouse. De forma programada y automática, el sistema calcula las variables necesarias y las guarda en una tabla de perfiles de clientes. 
+
+De la misma forma y basado en la tabla de perfiles de clientes, utilizaría el modelo para asignar automáticamente un cluster a cada cliente. Esto se actualizaría en la base de datos. 
+
+Finalmente, desarrollaría una API con la que sistemas como email o notifaciones push de celular puedan acceder al modelo y recibir la información para su uso. 
 

@@ -95,7 +95,9 @@ Nota: Este paso solo es necesario en caso de querer una respuesta real del LLM (
 
 En la base de datos relacional y, por ende en la consulta SQL, cada fila de **transacciones** representa un producto dentro de una transacción ya que en una transacción se pueden adquirir múltiples productos. Por ende, múltiples filas pueden tener el mismo `id_transaccion`.
 
-2. 
+2. **Dataset sintético**
+
+Para este prototipo, el dataset se generó sintéticamente utilizando distribuciones independientes por cliente, con el objetivo de poder implementar el sistema de forma completa. Esto implica una menor segmentación natural en los datos. En un dataset de transacciones reales, los patrones de comportamiento serían más definidos y, por ende, se esperaría una segmentación más marcada. A pesar de esto, el análisis se realizó siguiendo el mismo enfoque que se utilizaría con datos reales.
 
 3. **Modelo seleccionado - Gaussian Mixture Model**:
 
@@ -113,16 +115,21 @@ El prompt combina asignación de rol (experto en e-commerce/marketing de Cochez)
 
 ## Como escalaría este sistema en producción
 
+
+
 ## Resultados
 
 | Segmento | % clientes | Frecuencia promedio | Monto total gastado promedio | Recencia promedio (días) | Interpretación |
 |---|---|---|---|---|---|
 | Alto valor | 13.3% | 4.04 | $318.72 | 184.8 | Mayor gasto histórico, pero recencia alta indicando alto riesgo de fuga y alta prioridad de reactivación |
-| Bajo valor | 32.9% | 3.19 | $39.41 | 196.0 | Menor gasto y frecuencia, clientes ocasionales; riesgo de fuga alto pero cluster de menor prioridad |
+| Bajo valor | 32.9% | 3.19 | $39.41 | 196.0 | Menor gasto y frecuencia, clientes ocasionales. Riesgo de fuga alto pero cluster de menor prioridad |
 | Estándar | 21.9% | 4.12 | $95.58 | 48.9 | Clientes activos y leales, compran con frecuencia y recientemente. No están en riesgo pero retenerlos debe ser una prioridad |
-| Inactivo | 31.9% | 4.34 | $115.09 | 241.7 | Históricamente buenos clientes, pero sin compras recientes (~8 meses). Tienen el mayor riesgo de fuga |
+| Inactivo | 31.9% | 4.34 | $115.09 | 241.7 | Históricamente buenos clientes, pero sin compras recientes. Tienen el mayor riesgo de fuga |
  
-Silhouette Score del modelo final: **0.14**, lo cual indica solapamiento considerable entre segmentos.
+Silhouette Score del modelo final: **0.14**, lo cual indica overlap considerable entre segmentos.
 
-## Limitaciones 
+Nota: Esto es esperable debido a que el dataset es sintético y no contiene patrones reales de comportamiento diferenciados entre clientes. 
+
+
+
 

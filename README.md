@@ -39,7 +39,7 @@ Nota: Para esta prueba tecnica sin embargo, se entiende que en la práctica esta
 - **Estándar**
 - **Inactivo**
 
-7. A partir del cluster, monto total gastado, y categoría más comprada, se construye un prompt a través de **prompt engineering avanzado** incluyendo few-shot prompting, en este caso, 2 ejemplos.
+7. A partir del cluster, monto total gastado, y categoría más comprada, se construye un prompt a través de **prompt engineering avanzado** incluyendo asignación de rol y few-shot prompting, en este caso, 2 ejemplos.
 
 8. El prompt se envía al LLM seleccionado, en este caso **GPT 5 mini** a través de la **API de OpenAI** 
 
@@ -89,11 +89,40 @@ OPENAI_API_KEY=tu-api-key-aqui
 ```
 Nota: Este paso solo es necesario en caso de querer una respuesta real del LLM (`MOCK = False` dentro del notebook) y no utilizar el mock que simula la respuesta.
 
-## Decisiones técnincas 
+## Decisiones técnicas 
+
+1. **Estrucura de la base de datos**: 
+
+En la base de datos relacional y, por ende en la consulta SQL, cada fila de **transacciones** representa un producto dentro de una transacción ya que en una transacción se pueden adquirir múltiples productos. Por ende, múltiples filas pueden tener el mismo `id_transaccion`.
+
+2. 
+
+3. **Modelo seleccionado - Gaussian Mixture Model**:
+
+Elegí un Gaussian Mixture Model para este análisis por 3 principales motivos. 
+
+Primero, el GMM realiza **asignaciones probabilísticas** (soft clustering), es decir, calcula la probabilidad de que el cliente pertenezca a cada uno de los clusters. Esto es importante ya que existe superposición entre los grupos (indicado por el silhouette score), por lo que los grupos no son completamente separables.
+
+Segundo, el GMM es más flexible y **modela formas, tamaños y covarianzas distintas por cluster**. Esto lo adapta mejor a la data de clientes donde no todos se comportan de la misma manera. 
+
+Por último, el modelo permite su evaluación a través de BIC, lo cual permite obtener un modelo que **balancea el fit con complejidad**. Esto permite evitar "overfitting" y elegir el número óptimo de clusters, facilitando la interpretación de resultados. 
+
+4. **Prompt Engineering**:
+
+El prompt combina asignación de rol (experto en e-commerce/marketing de Cochez) con few-shot prompting (dos ejemplos completos de entrada y salida), e instrucciones por segmento y por monto total gastado.
 
 ## Como escalaría este sistema en producción
 
 ## Resultados
+
+| Segmento | % clientes | Frecuencia promedio | Monto total gastado promedio | Recencia promedio (días) | Interpretación |
+|---|---|---|---|---|---|
+| Alto valor | 13.3% | 4.04 | $318.72 | 184.8 | Mayor gasto histórico, pero recencia alta indicando alto riesgo de fuga y alta prioridad de reactivación |
+| Bajo valor | 32.9% | 3.19 | $39.41 | 196.0 | Menor gasto y frecuencia, clientes ocasionales; riesgo de fuga alto pero cluster de menor prioridad |
+| Estándar | 21.9% | 4.12 | $95.58 | 48.9 | Clientes activos y leales, compran con frecuencia y recientemente. No están en riesgo pero retenerlos debe ser una prioridad |
+| Inactivo | 31.9% | 4.34 | $115.09 | 241.7 | Históricamente buenos clientes, pero sin compras recientes (~8 meses). Tienen el mayor riesgo de fuga |
+ 
+Silhouette Score del modelo final: **0.14**, lo cual indica solapamiento considerable entre segmentos.
 
 ## Limitaciones 
 

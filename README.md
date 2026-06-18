@@ -30,7 +30,7 @@ Nota: Para esta prueba tecnica sin embargo, se entiende que en la práctica esta
 
 4. Se realiza preprocesamiento de datos normalizando los datos númericos (Recencia, Frecuencia, y Monto total gastado) utilizando StandardScaler. 
 
-5. Se entrena un Gaussian Mixture Model (clasificador no supervisado), seleccionando el número optimo de clusters mediante el Bayesian Information Criterion (BIC)
+5. Se entrena un **Gaussian Mixture Model** (clasificador no supervisado), seleccionando el número óptimo de clusters mediante el **Bayesian Information Criterion** (BIC)
 
 6. Cada cliente es asignado a uno de 4 clusters:
 
@@ -39,18 +39,19 @@ Nota: Para esta prueba tecnica sin embargo, se entiende que en la práctica esta
 - **Estándar**
 - **Inactivo**
 
-7. A partir del cluster, monto total gastado, y categoría más comprada, se construye un prompt a través de prompt engineering avanzado incluyendo few-shot prompting, en este caso, 2 ejemplos.
+7. A partir del cluster, monto total gastado, y categoría más comprada, se construye un prompt a través de **prompt engineering avanzado** incluyendo few-shot prompting, en este caso, 2 ejemplos.
 
-8. El prompt se envía al LLM seleccionado, en este caso **GPT 5 mini** a través de la API de OpenAI 
+8. El prompt se envía al LLM seleccionado, en este caso **GPT 5 mini** a través de la **API de OpenAI** 
 
 Nota: en este prototipo, la respuesta es simulada con un "mock" para evitar gastar créditos. 
 
-9. El modelo devuelve una respuesta en formato JSON con la siguiente estructura: 
+9. El modelo devuelve una **respuesta en formato JSON** con la siguiente estructura: 
 
-- Asunto
-- Cuerpo del mensaje 
-- Cupón de descuento sugerido
+- **Asunto**
+- **Cuerpo del mensaje** 
+- **Cupón de descuento sugerido**
 
+[!NOTE]
 Nota: En la práctica, esta respuesta se utiliza para enviar una notificación push personalizada al cliente.
 
 
